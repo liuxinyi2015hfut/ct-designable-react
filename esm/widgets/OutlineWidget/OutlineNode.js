@@ -28,8 +28,7 @@ export var OutlineTreeNode = observer(function (_a) {
             var id = node.id;
             if (!ref.current)
                 return;
-            if (closestNodeId === id &&
-                closestDirection === ClosestPosition.Inner) {
+            if (closestNodeId === id && closestDirection === ClosestPosition.Inner) {
                 if (!ref.current.classList.contains('droppable')) {
                     ref.current.classList.add('droppable');
                 }
