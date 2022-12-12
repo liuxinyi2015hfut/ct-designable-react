@@ -1,1 +1,1 @@
-export declare const useTree: (workspaceId?: string) => import("@designable/core").TreeNode;
+export declare const useTree: (workspaceId?: string) => import("packages/core/lib").TreeNode;

@@ -1,14 +1,15 @@
 import React from 'react';
-import { useDragon, usePrefix } from '../../hooks';
+import { useMoveHelper, usePrefix } from '../../hooks';
 import { ClosestPosition } from '@designable/core';
 import { observer } from '@formily/reactive-react';
 export var Insertion = observer(function () {
-    var viewportDragon = useDragon();
+    var moveHelper = useMoveHelper();
     var prefix = usePrefix('aux-insertion');
     var createInsertionStyle = function () {
-        var closestDirection = viewportDragon.closestDirection;
-        var closestRect = viewportDragon.closestOffsetRect;
-        var isInlineLayout = viewportDragon.getClosestLayout() === 'horizontal';
+        var _a;
+        var closestDirection = moveHelper.viewportClosestDirection;
+        var closestRect = moveHelper.viewportClosestOffsetRect;
+        var isInlineLayout = ((_a = moveHelper.closestNode) === null || _a === void 0 ? void 0 : _a.moveLayout) === 'horizontal';
         var baseStyle = {
             position: 'absolute',
             transform: 'perspective(1px) translate3d(0,0,0)',
@@ -21,13 +22,13 @@ export var Insertion = observer(function () {
             closestDirection === ClosestPosition.ForbidBefore) {
             baseStyle.width = 2;
             baseStyle.height = closestRect.height;
-            baseStyle.transform = "perspective(1px) translate3d(" + closestRect.x + "px," + closestRect.y + "px,0)";
+            baseStyle.transform = "perspective(1px) translate3d(".concat(closestRect.x, "px,").concat(closestRect.y, "px,0)");
         }
         else if (closestDirection === ClosestPosition.After ||
             closestDirection === ClosestPosition.ForbidAfter) {
             baseStyle.width = 2;
             baseStyle.height = closestRect.height;
-            baseStyle.transform = "perspective(1px) translate3d(" + (closestRect.x + closestRect.width - 2) + "px," + closestRect.y + "px,0)";
+            baseStyle.transform = "perspective(1px) translate3d(".concat(closestRect.x + closestRect.width - 2, "px,").concat(closestRect.y, "px,0)");
         }
         else if (closestDirection === ClosestPosition.InnerAfter ||
             closestDirection === ClosestPosition.Under ||
@@ -36,12 +37,12 @@ export var Insertion = observer(function () {
             if (isInlineLayout) {
                 baseStyle.width = 2;
                 baseStyle.height = closestRect.height;
-                baseStyle.transform = "perspective(1px) translate3d(" + (closestRect.x + closestRect.width - 2) + "px," + closestRect.y + "px,0)";
+                baseStyle.transform = "perspective(1px) translate3d(".concat(closestRect.x + closestRect.width - 2, "px,").concat(closestRect.y, "px,0)");
             }
             else {
                 baseStyle.width = closestRect.width;
                 baseStyle.height = 2;
-                baseStyle.transform = "perspective(1px) translate3d(" + closestRect.x + "px," + (closestRect.y + closestRect.height - 2) + "px,0)";
+                baseStyle.transform = "perspective(1px) translate3d(".concat(closestRect.x, "px,").concat(closestRect.y + closestRect.height - 2, "px,0)");
             }
         }
         else if (closestDirection === ClosestPosition.InnerBefore ||
@@ -51,12 +52,12 @@ export var Insertion = observer(function () {
             if (isInlineLayout) {
                 baseStyle.width = 2;
                 baseStyle.height = closestRect.height;
-                baseStyle.transform = "perspective(1px) translate3d(" + closestRect.x + "px," + closestRect.y + "px,0)";
+                baseStyle.transform = "perspective(1px) translate3d(".concat(closestRect.x, "px,").concat(closestRect.y, "px,0)");
             }
             else {
                 baseStyle.width = closestRect.width;
                 baseStyle.height = 2;
-                baseStyle.transform = "perspective(1px) translate3d(" + closestRect.x + "px," + closestRect.y + "px,0)";
+                baseStyle.transform = "perspective(1px) translate3d(".concat(closestRect.x, "px,").concat(closestRect.y, "px,0)");
             }
         }
         if (closestDirection.includes('FORBID')) {

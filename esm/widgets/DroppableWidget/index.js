@@ -34,8 +34,8 @@ export var DroppableWidget = observer(function (_a) {
     var target = node !== null && node !== void 0 ? node : currentNode;
     var hasChildren = hasChildrenProp !== null && hasChildrenProp !== void 0 ? hasChildrenProp : ((_b = target.children) === null || _b === void 0 ? void 0 : _b.length) > 0;
     var prefixCls = usePrefix('droppable');
-    return (React.createElement("div", __assign({}, nodeId, { className: className, style: style }),
-        hasChildren ? (props.children) : placeholder ? (React.createElement("div", { style: { height: height }, className: prefixCls + "-placeholder" },
+    return (React.createElement("div", __assign({}, nodeId, props, { className: className, style: style }),
+        hasChildren ? (props.children) : placeholder ? (React.createElement("div", { style: { height: height }, className: prefixCls + '-placeholder' },
             React.createElement(NodeTitleWidget, { node: target }))) : (props.children),
         (actions === null || actions === void 0 ? void 0 : actions.length) ? (React.createElement(NodeActionsWidget, null, actions.map(function (action, key) { return (React.createElement(NodeActionsWidget.Action, __assign({}, action, { key: key }))); }))) : null));
 });

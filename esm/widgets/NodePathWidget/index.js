@@ -1,13 +1,13 @@
 import React from 'react';
 import { Breadcrumb } from 'antd';
-import { useCurrentNode, useSelection, usePrefix, useHover } from '../../hooks';
+import { useSelectedNode, useSelection, usePrefix, useHover } from '../../hooks';
 import { IconWidget } from '../IconWidget';
 import { NodeTitleWidget } from '../NodeTitleWidget';
 import { observer } from '@formily/reactive-react';
 import './styles.less';
 export var NodePathWidget = observer(function (props) {
     var _a;
-    var selected = useCurrentNode(props.workspaceId);
+    var selected = useSelectedNode(props.workspaceId);
     var selection = useSelection(props.workspaceId);
     var hover = useHover(props.workspaceId);
     var prefix = usePrefix('node-path');

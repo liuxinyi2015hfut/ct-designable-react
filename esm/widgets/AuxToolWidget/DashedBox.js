@@ -16,7 +16,7 @@ export var DashedBox = observer(function () {
             zIndex: 2,
         };
         if (rect) {
-            baseStyle.transform = "perspective(1px) translate3d(" + rect.x + "px," + rect.y + "px,0)";
+            baseStyle.transform = "perspective(1px) translate3d(".concat(rect.x, "px,").concat(rect.y, "px,0)");
             baseStyle.height = rect.height;
             baseStyle.width = rect.width;
             baseStyle.visibility = 'visible';

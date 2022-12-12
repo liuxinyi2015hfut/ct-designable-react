@@ -28,8 +28,12 @@ export var ResizeHandler = function (props) {
     var allowX = allowResize.includes('x');
     var allowY = allowResize.includes('y');
     return (React.createElement(React.Fragment, null,
-        allowX && React.createElement("div", __assign({}, createHandler('x-start'))),
-        allowX && React.createElement("div", __assign({}, createHandler('x-end'))),
-        allowY && React.createElement("div", __assign({}, createHandler('y-start'))),
-        allowY && React.createElement("div", __assign({}, createHandler('y-end')))));
+        allowX && React.createElement("div", __assign({}, createHandler('left-center'))),
+        allowX && React.createElement("div", __assign({}, createHandler('right-center'))),
+        allowY && React.createElement("div", __assign({}, createHandler('center-top'))),
+        allowY && React.createElement("div", __assign({}, createHandler('center-bottom'))),
+        allowX && allowY && React.createElement("div", __assign({}, createHandler('left-top'))),
+        allowY && allowY && React.createElement("div", __assign({}, createHandler('right-top'))),
+        allowX && allowY && React.createElement("div", __assign({}, createHandler('left-bottom'))),
+        allowY && allowY && React.createElement("div", __assign({}, createHandler('right-bottom')))));
 };

@@ -1,1 +1,1 @@
-export declare const useOperation: (workspaceId?: string) => import("@designable/core").Operation;
+export declare const useOperation: (workspaceId?: string) => import("packages/core/lib").Operation;

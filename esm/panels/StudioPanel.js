@@ -30,7 +30,7 @@ var StudioPanelInternal = function (_a) {
     var position = usePosition();
     var classNameBase = cls('root', position, props.className);
     if (logo || actions) {
-        return (React.createElement("div", __assign({}, props, { className: cls(prefix + "-container", classNameBase) }),
+        return (React.createElement("div", __assign({}, props, { className: cls("".concat(prefix, "-container"), classNameBase) }),
             React.createElement("div", { className: prefix + '-header' },
                 React.createElement("div", { className: prefix + '-header-logo' }, logo),
                 React.createElement("div", { className: prefix + '-header-actions' }, actions)),

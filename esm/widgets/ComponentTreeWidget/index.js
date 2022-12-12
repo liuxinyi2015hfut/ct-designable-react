@@ -25,9 +25,14 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 import React, { Fragment, useEffect } from 'react';
 import { useTree, usePrefix, useDesigner, useComponents } from '../../hooks';
@@ -67,8 +72,8 @@ export var TreeNodeWidget = observer(function (props) {
             if (designer) {
                 dataId[(_a = designer === null || designer === void 0 ? void 0 : designer.props) === null || _a === void 0 ? void 0 : _a.nodeIdAttrName] = node.id;
             }
-            return React.createElement.apply(React, __spread([Component,
-                renderProps(dataId)], renderChildren()));
+            return React.createElement.apply(React, __spreadArray([Component,
+                renderProps(dataId)], __read(renderChildren()), false));
         }
         else {
             if ((_b = node === null || node === void 0 ? void 0 : node.children) === null || _b === void 0 ? void 0 : _b.length) {

@@ -3,7 +3,7 @@ import { ClosestPosition, CursorStatus, DragMoveEvent, } from '@designable/core'
 import { isFn } from '@designable/shared';
 import { autorun } from '@formily/reactive';
 import { observer } from '@formily/reactive-react';
-import { usePrefix, useCursor, useSelection, useOutlineDragon, useDesigner, } from '../../hooks';
+import { usePrefix, useCursor, useSelection, useMoveHelper, useDesigner, } from '../../hooks';
 import { IconWidget } from '../IconWidget';
 import { NodeTitleWidget } from '../NodeTitleWidget';
 import { NodeContext } from './context';
@@ -19,12 +19,12 @@ export var OutlineTreeNode = observer(function (_a) {
     var request = useRef(null);
     var cursor = useCursor();
     var selection = useSelection(workspaceId);
-    var outlineDragon = useOutlineDragon(workspaceId);
+    var moveHelper = useMoveHelper(workspaceId);
     useEffect(function () {
         return engine.subscribeTo(DragMoveEvent, function () {
             var _a;
-            var closestNodeId = (_a = outlineDragon === null || outlineDragon === void 0 ? void 0 : outlineDragon.closestNode) === null || _a === void 0 ? void 0 : _a.id;
-            var closestDirection = outlineDragon === null || outlineDragon === void 0 ? void 0 : outlineDragon.closestDirection;
+            var closestNodeId = (_a = moveHelper === null || moveHelper === void 0 ? void 0 : moveHelper.closestNode) === null || _a === void 0 ? void 0 : _a.id;
+            var closestDirection = moveHelper === null || moveHelper === void 0 ? void 0 : moveHelper.outlineClosestDirection;
             var id = node.id;
             if (!ref.current)
                 return;
@@ -52,7 +52,7 @@ export var OutlineTreeNode = observer(function (_a) {
                 }
             }
         });
-    }, [node, outlineDragon, cursor]);
+    }, [node, moveHelper, cursor]);
     useEffect(function () {
         return autorun(function () {
             var _a;
@@ -70,13 +70,14 @@ export var OutlineTreeNode = observer(function (_a) {
                     ref.current.classList.remove('selected');
                 }
             }
-            if (cursor.status === CursorStatus.Dragging && ((_a = outlineDragon === null || outlineDragon === void 0 ? void 0 : outlineDragon.dragNodes) === null || _a === void 0 ? void 0 : _a.length)) {
+            if (cursor.status === CursorStatus.Dragging &&
+                ((_a = moveHelper === null || moveHelper === void 0 ? void 0 : moveHelper.dragNodes) === null || _a === void 0 ? void 0 : _a.length)) {
                 if (ref.current.classList.contains('selected')) {
                     ref.current.classList.remove('selected');
                 }
             }
         });
-    }, [node, selection, outlineDragon]);
+    }, [node, selection, moveHelper]);
     if (!node)
         return null;
     var renderIcon = function (node) {

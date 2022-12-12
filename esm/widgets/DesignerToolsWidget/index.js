@@ -32,8 +32,8 @@ export var DesignerToolsWidget = observer(function (props) {
         if (!props.use.includes('CURSOR'))
             return null;
         return (React.createElement(Button.Group, { size: "small", style: { marginRight: 20 } },
-            React.createElement(Button, { size: "small", disabled: cursor.type === CursorType.Move, onClick: function () {
-                    cursor.setType(CursorType.Move);
+            React.createElement(Button, { size: "small", disabled: cursor.type === CursorType.Normal, onClick: function () {
+                    cursor.setType(CursorType.Normal);
                 } },
                 React.createElement(IconWidget, { infer: "Move" })),
             React.createElement(Button, { size: "small", disabled: cursor.type === CursorType.Selection, onClick: function () {

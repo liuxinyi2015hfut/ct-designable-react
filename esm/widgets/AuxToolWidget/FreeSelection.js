@@ -1,12 +1,13 @@
 import React from 'react';
-import { useCursor, usePrefix, useViewport } from '../../hooks';
+import { useCursor, usePrefix, useViewport, useOperation } from '../../hooks';
 import { observer } from '@formily/reactive-react';
-import { CursorStatus, CursorType } from '@designable/core';
+import { CursorDragType, CursorStatus } from '@designable/core';
 import { calcRectByStartEndPoint } from '@designable/shared';
 import cls from 'classnames';
 export var FreeSelection = observer(function () {
     var cursor = useCursor();
     var viewport = useViewport();
+    var operation = useOperation();
     var prefix = usePrefix('aux-free-selection');
     var createSelectionStyle = function () {
         var startDragPoint = viewport.getOffsetPoint({
@@ -17,7 +18,7 @@ export var FreeSelection = observer(function () {
             x: cursor.position.topClientX,
             y: cursor.position.topClientY,
         });
-        var rect = calcRectByStartEndPoint(startDragPoint, currentPoint, viewport.scrollX - cursor.dragStartScrollOffset.scrollX, viewport.scrollY - cursor.dragStartScrollOffset.scrollY);
+        var rect = calcRectByStartEndPoint(startDragPoint, currentPoint, viewport.dragScrollXDelta, viewport.dragScrollYDelta);
         var baseStyle = {
             position: 'absolute',
             top: 0,
@@ -25,7 +26,7 @@ export var FreeSelection = observer(function () {
             opacity: 0.2,
             borderWidth: 1,
             borderStyle: 'solid',
-            transform: "perspective(1px) translate3d(" + rect.x + "px," + rect.y + "px,0)",
+            transform: "perspective(1px) translate3d(".concat(rect.x, "px,").concat(rect.y, "px,0)"),
             height: rect.height,
             width: rect.width,
             pointerEvents: 'none',
@@ -34,8 +35,9 @@ export var FreeSelection = observer(function () {
         };
         return baseStyle;
     };
-    if (cursor.status !== CursorStatus.Dragging ||
-        cursor.type !== CursorType.Selection)
+    if (operation.moveHelper.hasDragNodes ||
+        cursor.status !== CursorStatus.Dragging ||
+        cursor.dragType !== CursorDragType.Move)
         return null;
     return React.createElement("div", { className: cls(prefix), style: createSelectionStyle() });
 });

@@ -29,7 +29,7 @@ export var ResourceWidget = observer(function (props) {
     var renderNode = function (source) {
         var _a;
         var node = source.node, icon = source.icon, title = source.title, thumb = source.thumb, span = source.span;
-        return (React.createElement("div", { className: prefix + '-item', style: { gridColumnStart: "span " + (span || 1) }, key: node.id, "data-designer-source-id": node.id },
+        return (React.createElement("div", { className: prefix + '-item', style: { gridColumnStart: "span ".concat(span || 1) }, key: node.id, "data-designer-source-id": node.id },
             thumb && React.createElement("img", { className: prefix + '-item-thumb', src: thumb }),
             icon && React.isValidElement(icon) ? (React.createElement(React.Fragment, null, icon)) : (React.createElement(IconWidget, { className: prefix + '-item-icon', infer: icon, style: { width: 150, height: 40 } })),
             React.createElement("span", { className: prefix + '-item-text' }, React.createElement(TextWidget, null, title || ((_a = node.children[0]) === null || _a === void 0 ? void 0 : _a.getMessage('title'))))));
@@ -62,7 +62,7 @@ export var ResourceWidget = observer(function (props) {
         React.createElement("div", { className: prefix + '-content-wrapper' },
             React.createElement("div", { className: prefix + '-content' },
                 sources.map(isFn(props.children) ? props.children : renderNode),
-                remainItems ? (React.createElement("div", { className: prefix + '-item-remain', style: { gridColumnStart: "span " + (3 - remainItems) } })) : null))));
+                remainItems ? (React.createElement("div", { className: prefix + '-item-remain', style: { gridColumnStart: "span ".concat(3 - remainItems) } })) : null))));
 });
 ResourceWidget.defaultProps = {
     defaultExpand: true,

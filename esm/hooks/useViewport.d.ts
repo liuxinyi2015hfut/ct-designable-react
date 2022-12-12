@@ -1,1 +1,1 @@
-export declare const useViewport: (workspaceId?: string) => import("@designable/core").Viewport;
+export declare const useViewport: (workspaceId?: string) => import("packages/core/lib").Viewport;

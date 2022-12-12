@@ -1,1 +1,1 @@
-export declare const useWorkbench: () => import("@designable/core").Workbench;
+export declare const useWorkbench: () => import("packages/core/lib").Workbench;

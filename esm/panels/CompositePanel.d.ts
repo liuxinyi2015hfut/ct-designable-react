@@ -18,5 +18,5 @@ export interface ICompositePanelItemProps {
     extra?: React.ReactNode;
 }
 export declare const CompositePanel: React.FC<React.PropsWithChildren<ICompositePanelProps>> & {
-    Item?: React.FC<React.PropsWithChildren<ICompositePanelItemProps>>;
+    Item: React.FC<React.PropsWithChildren<ICompositePanelItemProps>>;
 };

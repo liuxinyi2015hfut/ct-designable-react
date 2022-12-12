@@ -9,7 +9,7 @@ export var Layout = function (props) {
     useLayoutEffect(function () {
         if (ref.current) {
             each(props.variables, function (value, key) {
-                ref.current.style.setProperty("--" + key, value);
+                ref.current.style.setProperty("--".concat(key), value);
             });
         }
     }, []);
@@ -17,8 +17,8 @@ export var Layout = function (props) {
         return React.createElement(Fragment, null, props.children);
     }
     return (React.createElement("div", { ref: ref, className: cls((_a = {},
-            _a[props.prefixCls + "app"] = true,
-            _a["" + props.prefixCls + props.theme] = props.theme,
+            _a["".concat(props.prefixCls, "app")] = true,
+            _a["".concat(props.prefixCls).concat(props.theme)] = props.theme,
             _a)) },
         React.createElement(DesignerLayoutContext.Provider, { value: {
                 theme: props.theme,

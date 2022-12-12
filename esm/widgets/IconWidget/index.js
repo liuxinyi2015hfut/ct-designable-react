@@ -71,7 +71,7 @@ export var IconWidget = observer(function (props) {
     var renderTooltips = function (children) {
         if (!isStr(props.infer) && (context === null || context === void 0 ? void 0 : context.tooltip))
             return children;
-        var tooltip = props.tooltip || registry.getDesignerMessage("icons." + props.infer);
+        var tooltip = props.tooltip || registry.getDesignerMessage("icons.".concat(props.infer));
         if (tooltip) {
             var title = React.isValidElement(tooltip) || isStr(tooltip)
                 ? tooltip
@@ -91,14 +91,14 @@ export var IconWidget = observer(function (props) {
 });
 IconWidget.ShadowSVG = function (props) {
     var ref = useRef();
-    var width = isNumSize(props.width) ? props.width + "px" : props.width;
-    var height = isNumSize(props.height) ? props.height + "px" : props.height;
+    var width = isNumSize(props.width) ? "".concat(props.width, "px") : props.width;
+    var height = isNumSize(props.height) ? "".concat(props.height, "px") : props.height;
     useEffect(function () {
         if (ref.current) {
             var root = ref.current.attachShadow({
                 mode: 'open',
             });
-            root.innerHTML = "<svg viewBox=\"0 0 1024 1024\" style=\"width:" + width + ";height:" + height + "\">" + props.content + "</svg>";
+            root.innerHTML = "<svg viewBox=\"0 0 1024 1024\" style=\"width:".concat(width, ";height:").concat(height, "\">").concat(props.content, "</svg>");
         }
     }, []);
     return React.createElement("div", { ref: ref });

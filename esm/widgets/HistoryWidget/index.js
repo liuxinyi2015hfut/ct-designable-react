@@ -20,7 +20,7 @@ export var HistoryWidget = observer(function () {
                 currentWorkspace.history.goTo(index);
             } },
             React.createElement("span", { className: prefix + '-item-title' },
-                React.createElement(TextWidget, { token: "operations." + token })),
+                React.createElement(TextWidget, { token: "operations.".concat(token) })),
             React.createElement("span", { className: prefix + '-item-timestamp' },
                 ' ',
                 format(item.timestamp, 'yy/mm/dd HH:MM:ss'))));

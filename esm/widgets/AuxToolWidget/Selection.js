@@ -12,7 +12,7 @@ var __assign = (this && this.__assign) || function () {
 import React, { Fragment } from 'react';
 import { Helpers } from './Helpers';
 import { ResizeHandler } from './ResizeHandler';
-import { useSelection, useValidNodeOffsetRect, useTree, useCursor, useDragon, usePrefix, useDesigner, } from '../../hooks';
+import { useSelection, useValidNodeOffsetRect, useTree, useCursor, useMoveHelper, usePrefix, useDesigner, } from '../../hooks';
 import { observer } from '@formily/reactive-react';
 import { TranslateHandler } from './TranslateHandler';
 export var SelectionBox = function (props) {
@@ -28,9 +28,10 @@ export var SelectionBox = function (props) {
             top: 0,
             left: 0,
             boxSizing: 'border-box',
+            zIndex: 4,
         };
         if (nodeRect) {
-            baseStyle.transform = "perspective(1px) translate3d(" + nodeRect.x + "px," + nodeRect.y + "px,0)";
+            baseStyle.transform = "perspective(1px) translate3d(".concat(nodeRect.x, "px,").concat(nodeRect.y, "px,0)");
             baseStyle.height = nodeRect.height;
             baseStyle.width = nodeRect.width;
         }
@@ -53,8 +54,8 @@ export var Selection = observer(function () {
     var selection = useSelection();
     var tree = useTree();
     var cursor = useCursor();
-    var viewportDragon = useDragon();
-    if (cursor.status !== 'NORMAL' && viewportDragon.touchNode)
+    var viewportMoveHelper = useMoveHelper();
+    if (cursor.status !== 'NORMAL' && viewportMoveHelper.touchNode)
         return null;
     return (React.createElement(Fragment, null, selection.selected.map(function (id) {
         var node = tree.findById(id);

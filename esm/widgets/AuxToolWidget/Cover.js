@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { useViewport, useDragon, useCursor, useValidNodeOffsetRect, usePrefix, } from '../../hooks';
+import { useViewport, useMoveHelper, useCursor, useValidNodeOffsetRect, usePrefix, } from '../../hooks';
 import { observer } from '@formily/reactive-react';
 import { CursorStatus, ClosestPosition } from '@designable/core';
 import cls from 'classnames';
@@ -14,7 +14,7 @@ var CoverRect = function (props) {
             pointerEvents: 'none',
         };
         if (rect) {
-            baseStyle.transform = "perspective(1px) translate3d(" + rect.x + "px," + rect.y + "px,0)";
+            baseStyle.transform = "perspective(1px) translate3d(".concat(rect.x, "px,").concat(rect.y, "px,0)");
             baseStyle.height = rect.height;
             baseStyle.width = rect.width;
         }
@@ -26,21 +26,21 @@ var CoverRect = function (props) {
         }), style: createCoverStyle() }));
 };
 export var Cover = observer(function () {
-    var viewportDragon = useDragon();
+    var viewportMoveHelper = useMoveHelper();
     var viewport = useViewport();
     var cursor = useCursor();
     var renderDropCover = function () {
         var _a;
-        if (!viewportDragon.closestNode ||
-            !((_a = viewportDragon.closestNode) === null || _a === void 0 ? void 0 : _a.allowAppend(viewportDragon.dragNodes)) ||
-            viewportDragon.closestDirection !== ClosestPosition.Inner)
+        if (!viewportMoveHelper.closestNode ||
+            !((_a = viewportMoveHelper.closestNode) === null || _a === void 0 ? void 0 : _a.allowAppend(viewportMoveHelper.dragNodes)) ||
+            viewportMoveHelper.viewportClosestDirection !== ClosestPosition.Inner)
             return null;
-        return React.createElement(CoverRect, { node: viewportDragon.closestNode, dropping: true });
+        return React.createElement(CoverRect, { node: viewportMoveHelper.closestNode, dropping: true });
     };
     if (cursor.status !== CursorStatus.Dragging)
         return null;
     return (React.createElement(Fragment, null,
-        viewportDragon.dragNodes.map(function (node) {
+        viewportMoveHelper.dragNodes.map(function (node) {
             if (!node)
                 return;
             if (!viewport.findElementById(node.id))

@@ -1,1 +1,1 @@
-export declare const useCursor: () => import("@designable/core").Cursor;
+export declare const useCursor: () => import("packages/core/lib").Cursor;

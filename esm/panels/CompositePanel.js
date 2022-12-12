@@ -95,7 +95,7 @@ export var CompositePanel = function (props) {
             React.createElement("div", { className: prefix + '-tabs-body' }, content)));
     };
     return (React.createElement("div", { className: cls(prefix, (_a = {},
-            _a["direction-" + props.direction] = !!props.direction,
+            _a["direction-".concat(props.direction)] = !!props.direction,
             _a)) },
         React.createElement("div", { className: prefix + '-tabs' }, items.map(function (item, index) {
             var _a;

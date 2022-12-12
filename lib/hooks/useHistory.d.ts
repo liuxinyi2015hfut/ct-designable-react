@@ -1,1 +1,1 @@
-export declare const useHistory: (workspaceId?: string) => import("@designable/core").History<import("@designable/core").Workspace>;
+export declare const useHistory: (workspaceId?: string) => import("packages/core/lib").History<import("packages/core/lib").Workspace>;

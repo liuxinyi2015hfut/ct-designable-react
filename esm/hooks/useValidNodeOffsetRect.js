@@ -14,10 +14,9 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { CursorStatus, ScreenStatus } from '@designable/core';
-import { requestIdle, cancelIdle } from '@designable/shared';
-import { ResizeObserver } from '@juggle/resize-observer';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { CursorStatus, CursorDragType } from '@designable/core';
+import { LayoutObserver } from '@designable/shared';
 import { useViewport } from './useViewport';
 import { useDesigner } from './useDesigner';
 var isEqualRect = function (rect1, rect2) {
@@ -30,51 +29,25 @@ export var useValidNodeOffsetRect = function (node) {
     var engine = useDesigner();
     var viewport = useViewport();
     var _a = __read(useState(null), 2), forceUpdate = _a[1];
-    var rectRef = useRef(viewport.getValidNodeOffsetRect(node));
-    var idleTaskRef = useRef(null);
-    var unmountRef = useRef(false);
-    var observerRef = useRef(null);
+    var rectRef = useMemo(function () { return ({ current: viewport.getValidNodeOffsetRect(node) }); }, [viewport]);
     var element = viewport.findElementById(node === null || node === void 0 ? void 0 : node.id);
     var compute = useCallback(function () {
-        if (unmountRef.current)
-            return;
         if (engine.cursor.status !== CursorStatus.Normal &&
-            engine.screen.status === ScreenStatus.Normal)
+            engine.cursor.dragType === CursorDragType.Move)
             return;
         var nextRect = viewport.getValidNodeOffsetRect(node);
         if (!isEqualRect(rectRef.current, nextRect) && nextRect) {
             rectRef.current = nextRect;
-            forceUpdate(nextRect);
+            forceUpdate([]);
         }
     }, [viewport, node]);
     useEffect(function () {
-        if (!element || !element.isConnected)
-            return;
-        if (observerRef.current) {
-            observerRef.current.disconnect();
-        }
-        observerRef.current = new ResizeObserver(function () {
-            compute();
-        });
-        observerRef.current.observe(element);
+        var layoutObserver = new LayoutObserver(compute);
+        if (element)
+            layoutObserver.observe(element);
         return function () {
-            observerRef.current.disconnect();
+            layoutObserver.disconnect();
         };
-    }, [element, viewport]);
-    useEffect(function () {
-        unmountRef.current = false;
-        var requestIdleTask = function () {
-            cancelIdle(idleTaskRef.current);
-            idleTaskRef.current = requestIdle(function () {
-                compute();
-                requestIdleTask();
-            });
-        };
-        requestIdleTask();
-        return function () {
-            unmountRef.current = true;
-            cancelIdle(idleTaskRef.current);
-        };
-    }, [node]);
+    }, [node, viewport, element]);
     return rectRef.current;
 };

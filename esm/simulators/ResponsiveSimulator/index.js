@@ -11,7 +11,7 @@ var __assign = (this && this.__assign) || function () {
 };
 import React, { useRef } from 'react';
 import { observer } from '@formily/reactive-react';
-import { DragStartEvent, DragMoveEvent, DragStopEvent, ScreenStatus, } from '@designable/core';
+import { DragStartEvent, DragMoveEvent, DragStopEvent, CursorDragType, } from '@designable/core';
 import { calcSpeedFactor, createUniformSpeedAnimation, } from '@designable/shared';
 import { useScreen, useDesigner, usePrefix } from '../../hooks';
 import { IconWidget } from '../../widgets';
@@ -55,17 +55,17 @@ var useResizeEffect = function (container, content, engine) {
         if (!((_a = engine.workbench.currentWorkspace) === null || _a === void 0 ? void 0 : _a.viewport))
             return;
         var target = e.data.target;
-        if (target === null || target === void 0 ? void 0 : target.closest('*[data-designer-resize-handle]')) {
+        if (target === null || target === void 0 ? void 0 : target.closest("*[".concat(engine.props.screenResizeHandlerAttrName, "]"))) {
             var rect = (_b = content.current) === null || _b === void 0 ? void 0 : _b.getBoundingClientRect();
             if (!rect)
                 return;
-            status = target.getAttribute('data-designer-resize-handle');
+            status = target.getAttribute(engine.props.screenResizeHandlerAttrName);
             engine.cursor.setStyle(getStyle(status));
             startX = e.data.topClientX;
             startY = e.data.topClientY;
             startWidth = rect.width;
             startHeight = rect.height;
-            engine.screen.setStatus(ScreenStatus.Resizing);
+            engine.cursor.setDragType(CursorDragType.Resize);
         }
     });
     engine.subscribeTo(DragMoveEvent, function (e) {
@@ -112,7 +112,7 @@ var useResizeEffect = function (container, content, engine) {
             return;
         status = null;
         engine.cursor.setStyle('');
-        engine.screen.setStatus(ScreenStatus.Normal);
+        engine.cursor.setDragType(CursorDragType.Move);
         if (animationX) {
             animationX = animationX();
         }

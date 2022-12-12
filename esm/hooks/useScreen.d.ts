@@ -1,1 +1,1 @@
-export declare const useScreen: () => import("@designable/core").Screen;
+export declare const useScreen: () => import("packages/core/lib").Screen;

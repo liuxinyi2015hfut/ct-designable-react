@@ -1,1 +1,1 @@
-export declare const useTreeNode: () => import("@designable/core").TreeNode;
+export declare const useTreeNode: () => import("packages/core/lib").TreeNode;
